@@ -1,0 +1,78 @@
+[rustsbi] Version 0.1.0
+.______       __    __      _______.___________.  _______..______   __
+|   _  \     |  |  |  |    /       |           | /       ||   _  \ |  |
+|  |_)  |    |  |  |  |   |   (----`---|  |----`|   (----`|  |_)  ||  |
+|      /     |  |  |  |    \   \       |  |      \   \    |   _  < |  |
+|  |\  \----.|  `--'  |.----)   |      |  |  .----)   |   |  |_)  ||  |
+| _| `._____| \______/ |_______/       |__|  |_______/    |______/ |__|
+
+[rustsbi] Platform: K210
+[rustsbi] misa: RV64ACDFIMSU
+[rustsbi] mideleg: 0x222
+[rustsbi] medeleg: 0x1ab
+[rustsbi] Kernel entry: 0x80020000
+HEAP:0xffffffff803ba000
+HEAP_SPACE:[0xffffffff800ba000,0xffffffff803ba000)
+mod memory initialized
+into sbi::register_devintr!
+++++ setup sdcard      ++++
+.
+..
+r_sleep
+sleepkill
+stdtest
+exit
+divzero
+r_notebook
+spin
+forktree
+r_stack_overflow
+waitkill
+r_fantastic_text
+sfs_filetest1
+r_spin
+r_forktest
+priority
+r_forktest2
+r_forever
+faultreadkernel
+sleep
+faultread
+matrix
+hello
+sh
+badarg
+forktest
+yield
+r_forktest_simple
+r_matrix_g
+r_matrix
+r_sleep_simple
+r_hello_world
+r_user_shell
+r_initproc
+r_usertests
+ls
+badsegment
+r_usertests_full
+r_yield
+softint
+r_exit
+testbss
+mod fs initialized
+mod interrupt initialized
+mod interrupt initialized
+Hello rCore hartid = 0, dtp_pa = PhysicalAddress(0x2333333366666666)
+Hello rCore hartid = 1, dtp_pa = PhysicalAddress(0x2333333366666666)
+================
+|--BEGIN TEST--|
+================
+
+---[test_fork] BEGIN---
+[fork]this is child
+[fork]this is parent
+
+---[test_fork] END
+---================
+|---END TEST---|
+================

@@ -1,0 +1,18 @@
+[package]
+name = "oscomp-dependencies-old"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+buddy_system_allocator = "0.6"
+clap = "2.34.0"
+heapless = "0.6.1"
+k210-hal = { git = "https://github.com/riscv-rust/k210-hal", rev = "fb6c2394" }
+k210-pac = { git = "https://github.com/riscv-rust/k210-pac", rev = "53a317fc" }
+# linked_list_allocator = "0.8.11" # can't build under 2022 nightly, const_fn feature removed
+riscv = { git = "https://github.com/rust-embedded/riscv", rev = "cd31989b" }
+spin = "0.7.1"
+xmas-elf = "0.7.0"
+# rustsbi = "0.1.1" # can't build under 2022 nightly, one of its dependencies is yanked

@@ -1,0 +1,60 @@
+<div>
+    <h2>评测完成</h2>
+    <p>开始时间：{{ info.start_time }}</p>
+    <p>结束时间：{{ info.end_time }}</p>
+    <p>总分：{{ info.score }}</p>
+    <h2>得分详情</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>测试点</th>
+            {% for k in info.rank_cols %}
+                <th>{{ k }}</th>
+            {% endfor %}
+            <th>总分</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in info.rank_rows %}
+            <tr>
+                <th>{{ row }}</th>
+                {% for col in info.rank_cols %}
+                    <th>
+                        {% if row in info.rank_table %}
+                            {% if col in info.rank_table[row] %}
+                                {{ info.rank_table[row][col] }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </th>
+                {% endfor %}
+                <th>{{ info.sum_row[row] }}</th>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th>总分</th>
+            {% for col in info.rank_cols %}
+                <th>
+                    {{ info.sum_col[col] }}
+                </th>
+            {% endfor %}
+            <th>{{ info.score }}</th>
+        </tr>
+        {#        <tr>#}
+        {#            {% for k in info.rank %}#}
+        {#                <td>{{ info.rank[k] }}</td>#}
+        {#            {% endfor %}#}
+        {#        </tr>#}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>

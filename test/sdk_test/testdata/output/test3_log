@@ -1,0 +1,5 @@
+Accept:[test3]Before alloc,free heap size is 6127616
+Accept:[test3]Before alloc,heap  pos: 2147643008
+Accept:[test3]After alloc,heap pos: 2147643008
+Accept:[test3]Alloc again,heap pos: 2147643008
+Accept:[test3]After alloc,free heap size is 6127616

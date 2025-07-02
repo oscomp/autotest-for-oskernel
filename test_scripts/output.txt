@@ -1,0 +1,17 @@
+=============test1===============
+
+[test1_ori]Hello K210
+
+=============end test1===========
+=============test2===============
+
+[test2 ori]free heap size is 6127616
+
+=============end test2===========
+=============test3===============
+[test3 ori]Before alloc,free heap size is 6127616
+[test3 ori]Before alloc,heap  pos: 2147643072
+[test3 ori]After alloc,heap pos: 2147643072
+[test3 ori]Alloc again,heap pos: 2147643072
+[test3 ori]After alloc,free heap size is 6127616
+=============end test3===========

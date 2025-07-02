@@ -1,0 +1,2 @@
+['.\\test_popen.py', 'sub']
+This is stdout

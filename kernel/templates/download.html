@@ -1,0 +1,13 @@
+<button onclick="download{{ id }}()">下载{{ name }}</button>
+<div id="content{{ id }}" style="display: none;">{{ content }}</div>
+<script>
+var download{{ id }}= function () {
+    var e = document.createElement('a');
+    e.download = "{{ name }}.txt";
+    e.style.display = 'none';
+    var b = new Blob([document.getElementById('content{{ id }}').innerText]);
+    e.href = URL.createObjectURL(b);
+    document.body.appendChild(e);
+    e.click();
+    document.body.removeChild(e);
+}; </script>

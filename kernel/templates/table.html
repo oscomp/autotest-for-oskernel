@@ -1,0 +1,28 @@
+<h3>{{ group }}</h3>
+<table>
+    <thead>
+    <tr>
+        <th rowspan="2">测试点</th>
+        {% for item in arch_list %}
+            <th colspan="{{ headers |length }}"> {{ item }}</th>
+        {% endfor %}
+        <th rowspan="2">总分</th>
+    </tr>
+    <tr>
+        {% for _ in arch_list %}
+            {% for item in headers %}
+                <th>{{ item }}</th>
+            {% endfor %}
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in result %}
+        <tr>
+            {% for x in item %}
+                <td>{{ x }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

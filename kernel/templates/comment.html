@@ -1,0 +1,66 @@
+<meta charset="UTF-8">
+<p>
+    <p>开始评测时间：{{ info.start_time }}</p>
+    <p>结束评测时间：{{ info.end_time }}</p>
+{#    <p>开发板编号：{{ info.device }}</p>#}
+{#{% if stage == 1 %}#}
+{#    <p>通过测试点：{{ info.passed }}/{{ info.all }}</p>#}
+{#{% endif %}#}
+    <p>得分：{{ info.score }}</p>
+    <p>时间测试：{{ info.time_test['time-test'] }}ms</p>
+{% if info.time_test['time-test'] == 0 %}
+    <p style="color: red;">时间测试失败，此次提交成绩无效！</p>
+{% endif %}
+{% if stage == 1 %}
+    <table border="1">
+        <thead>
+        <tr><td colspan="3">测试结果</td></tr>
+        </thead>
+        <thead>
+            <tr>
+                <td>测试样例名</td>
+                <td>通过测试点</td>
+                <td>全部测试点</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in results %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.passed }}</td>
+            <td>{{ item.all }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% if final %}
+{#{% if stage == 2 %}#}
+    {% for k, v in details.items() %}
+    <table border="1">
+    <thead>
+    <tr><td colspan="2">{{ k }}</td></tr>
+    </thead>
+        <thead>
+            <tr>
+                <td>测试点</td>
+                <td>运行结果</td>
+                <td>基准</td>
+                <td>得分</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in v %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.res }}</td>
+            <td>{{ item.baseline }}</td>
+            <td>{{ item.score}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+{% endif %}
+
+</div>

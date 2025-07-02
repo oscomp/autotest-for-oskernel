@@ -1,0 +1,18 @@
+Core 0 Hello world
+=============test1===============
+Core 1 Hello world
+
+[test1]Hello K210
+=============end test1===========
+=============test2===============
+
+[test2]free heap size is 6127616
+
+=============end test2===========
+=============test3===============
+[test3]Before alloc,free heap size is 6127616
+[test3]Before alloc,heap  pos: 2147643008
+[test3]After alloc,heap pos: 2147643008
+[test3]Alloc again,heap pos: 2147643008
+[test3]After alloc,free heap size is 6127616
+=============end test3===========

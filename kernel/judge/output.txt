@@ -1,0 +1,237 @@
+qemu-system-riscv64 -machine virt -kernel kernel-rv -m 1G -nographic -smp 1 -bios default -drive file=sdcard-rv.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0 -no-reboot -device virtio-net-device,netdev=net -netdev user,id=net -rtc base=utc 
+
+OpenSBI v1.5.1
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name             : riscv-virtio,qemu
+Platform Features         : medeleg
+Platform HART Count       : 1
+Platform IPI Device       : aclint-mswi
+Platform Timer Device     : aclint-mtimer @ 10000000Hz
+Platform Console Device   : uart8250
+Platform HSM Device       : ---
+Platform PMU Device       : ---
+Platform Reboot Device    : syscon-reboot
+Platform Shutdown Device  : syscon-poweroff
+Platform Suspend Device   : ---
+Platform CPPC Device      : ---
+Firmware Base             : 0x80000000
+Firmware Size             : 327 KB
+Firmware RW Offset        : 0x40000
+Firmware RW Size          : 71 KB
+Firmware Heap Offset      : 0x49000
+Firmware Heap Size        : 35 KB (total), 2 KB (reserved), 11 KB (used), 21 KB (free)
+Firmware Scratch Size     : 4096 B (total), 416 B (used), 3680 B (free)
+Runtime SBI Version       : 2.0
+
+Domain0 Name              : root
+Domain0 Boot HART         : 0
+Domain0 HARTs             : 0*
+Domain0 Region00          : 0x0000000000100000-0x0000000000100fff M: (I,R,W) S/U: (R,W)
+Domain0 Region01          : 0x0000000010000000-0x0000000010000fff M: (I,R,W) S/U: (R,W)
+Domain0 Region02          : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+Domain0 Region03          : 0x0000000080040000-0x000000008005ffff M: (R,W) S/U: ()
+Domain0 Region04          : 0x0000000080000000-0x000000008003ffff M: (R,X) S/U: ()
+Domain0 Region05          : 0x000000000c400000-0x000000000c5fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region06          : 0x000000000c000000-0x000000000c3fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region07          : 0x0000000000000000-0xffffffffffffffff M: () S/U: (R,W,X)
+Domain0 Next Address      : 0x0000000080200000
+Domain0 Next Arg1         : 0x00000000bfe00000
+Domain0 Next Mode         : S-mode
+Domain0 SysReset          : yes
+Domain0 SysSuspend        : yes
+
+Boot HART ID              : 0
+Boot HART Domain          : root
+Boot HART Priv Version    : v1.12
+Boot HART Base ISA        : rv64imafdch
+Boot HART ISA Extensions  : sstc,zicntr,zihpm,zicboz,zicbom,sdtrig,svadu
+Boot HART PMP Count       : 16
+Boot HART PMP Granularity : 2 bits
+Boot HART PMP Address Bits: 54
+Boot HART MHPM Info       : 16 (0x0007fff8)
+Boot HART Debug Triggers  : 2 triggers
+Boot HART MIDELEG         : 0x0000000000001666
+Boot HART MEDELEG         : 0x0000000000f0b509
+hello world!
+hart id is 0x0, dt_root is 0xffffffc000000000
+
+                       
+    `YMM'   `MM'                   .g8""8q.    .M"""bgd 
+      VMA   ,V                   .dP'    `YM. ,MI    "Y 
+       VMA ,V ,pW"Wq.   ,pW"Wq.  dM'      `MM `MMb.     
+        VMMP 6W'   `Wb 6W'   `Wb MM        MM   `YMMNq. 
+         MM  8M     M8 8M     M8 MM.      ,MP .     `MM 
+         MM  YA.   ,A9 YA.   ,A9 `Mb.    ,dP' Mb     dM 
+       .JMML. `Ybmd9'   `YooOS'    `"bmmd"'   P"Ybmmd"  
+                                                        
+    
+start init mm
+last 196608 Physical Frames.
+kernel satp : 0x8000000000090000
+.text [0xffffffc080200000, 0xffffffc0802c5000)
+.rodata [0xffffffc0802c5000, 0xffffffc0802f8000)
+.data [0xffffffc0802f8000, 0xffffffc08038a000)
+.bss [0xffffffc08038a000, 0xffffffc0843ad000)
+mapping .text section
+[map_kernel_range] map area:0xffffffc080200000..0xffffffc080201000
+mapping .text section
+[map_kernel_range] map area:0xffffffc080201000..0xffffffc080202000
+mapping .text section left
+[map_kernel_range] map area:0xffffffc080202000..0xffffffc0802c5000
+mapping .rodata section
+[map_kernel_range] map area:0xffffffc0802c5000..0xffffffc0802f8000
+mapping .data section
+[map_kernel_range] map area:0xffffffc0802f8000..0xffffffc08038a000
+mapping .bss section
+[map_kernel_range] map area:0xffffffc08038a000..0xffffffc0843ad000
+mapping physical memory
+[map_kernel_range] map area:0xffffffc0843ad000..0xffffffc0c0000000
+mapping devices
+kernel memory set initialized
+finished mm::init
+[kernel] ---------- hart 0 is starting... ----------
+fd addr @FFFFFFC0BFE00000
+name: / Some(Some("riscv-virtio"))
+name: reserved-memory None
+name: mmode_resv1@80000000 None
+   0x0000000080000000, length Some(262144)
+name: mmode_resv0@80040000 None
+   0x0000000080040000, length Some(131072)
+name: poweroff Some(Some("syscon-poweroff"))
+name: reboot Some(Some("syscon-reboot"))
+name: platform-bus@4000000 Some(Some("qemu,platform"))
+name: memory@80000000 None
+   0x0000000080000000, length Some(1073741824)
+name: cpus None
+name: cpu@0 Some(Some("riscv"))
+   0x0000000000000000, length None
+name: interrupt-controller Some(Some("riscv,cpu-intc"))
+name: cpu-map None
+name: cluster0 None
+name: core0 None
+name: pmu Some(Some("riscv,pmu"))
+name: fw-cfg@10100000 Some(Some("qemu,fw-cfg-mmio"))
+   0x0000000010100000, length Some(24)
+name: flash@20000000 Some(Some("cfi-flash"))
+   0x0000000020000000, length Some(33554432)
+   0x0000000022000000, length Some(33554432)
+name: chosen None
+name: soc Some(Some("simple-bus"))
+name: rtc@101000 Some(Some("google,goldfish-rtc"))
+   0x0000000000101000, length Some(4096)
+name: serial@10000000 Some(Some("ns16550a"))
+   0x0000000010000000, length Some(256)
+name: test@100000 Some(Some("sifive,test1"))
+   0x0000000000100000, length Some(4096)
+name: virtio_mmio@10008000 Some(Some("virtio,mmio"))
+   0x0000000010008000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10008000, size: Some(4096) }
+addr: FFFFFFC010008000 size: 1000 start trans to MmioTransport
+Detected virtio MMIO device with vendor id 0x554D4551, device type Network, version Legacy
+check is it block
+finished check start to transport
+virtio-net test finished
+name: virtio_mmio@10007000 Some(Some("virtio,mmio"))
+   0x0000000010007000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10007000, size: Some(4096) }
+addr: FFFFFFC010007000 size: 1000 start trans to MmioTransport
+Error creating VirtIO MMIO transport: InvalidDeviceID(InvalidDeviceType(0))
+name: virtio_mmio@10006000 Some(Some("virtio,mmio"))
+   0x0000000010006000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10006000, size: Some(4096) }
+addr: FFFFFFC010006000 size: 1000 start trans to MmioTransport
+Error creating VirtIO MMIO transport: InvalidDeviceID(InvalidDeviceType(0))
+name: virtio_mmio@10005000 Some(Some("virtio,mmio"))
+   0x0000000010005000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10005000, size: Some(4096) }
+addr: FFFFFFC010005000 size: 1000 start trans to MmioTransport
+Error creating VirtIO MMIO transport: InvalidDeviceID(InvalidDeviceType(0))
+name: virtio_mmio@10004000 Some(Some("virtio,mmio"))
+   0x0000000010004000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10004000, size: Some(4096) }
+addr: FFFFFFC010004000 size: 1000 start trans to MmioTransport
+Error creating VirtIO MMIO transport: InvalidDeviceID(InvalidDeviceType(0))
+name: virtio_mmio@10003000 Some(Some("virtio,mmio"))
+   0x0000000010003000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10003000, size: Some(4096) }
+addr: FFFFFFC010003000 size: 1000 start trans to MmioTransport
+Error creating VirtIO MMIO transport: InvalidDeviceID(InvalidDeviceType(0))
+name: virtio_mmio@10002000 Some(Some("virtio,mmio"))
+   0x0000000010002000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10002000, size: Some(4096) }
+addr: FFFFFFC010002000 size: 1000 start trans to MmioTransport
+Error creating VirtIO MMIO transport: InvalidDeviceID(InvalidDeviceType(0))
+name: virtio_mmio@10001000 Some(Some("virtio,mmio"))
+   0x0000000010001000, length Some(4096)
+Found VirtIO MMIO device at MemoryRegion { starting_address: 0x10001000, size: Some(4096) }
+addr: FFFFFFC010001000 size: 1000 start trans to MmioTransport
+Detected virtio MMIO device with vendor id 0x554D4551, device type Block, version Legacy
+check is it block
+finished check start to transport
+name: plic@c000000 Some(Some("sifive,plic-1.0.0"))
+   0x000000000c000000, length Some(6291456)
+name: clint@2000000 Some(Some("sifive,clint0"))
+   0x0000000002000000, length Some(65536)
+name: pci@30000000 Some(Some("pci-host-ecam-generic"))
+   0x0000000030000000, length Some(268435456)
+[Del0n1x] init fs start ...
+init ext4 device superblock
+.
+
+..
+lost+found
+glibc
+musl
+procs init successfully!
+main parent
+#### OS COMP TEST GROUP START ltp-musl ####
+RUN LTP CASE chown02
+tst_memutils.c:152: ␛[1;34mTINFO: ␛[0moom_score_adj does not exist, skipping the adjustment
+tst_test.c:1733: ␛[1;34mTINFO: ␛[0mLTP version: 20240524
+tst_test.c:1617: ␛[1;34mTINFO: ␛[0mTimeout per run is 0h 00m 30s
+tst_memutils.c:152: ␛[1;34mTINFO: ␛[0moom_score_adj does not exist, skipping the adjustment
+chown02.c:46: ␛[1;32mTPASS: ␛[0mchown(testfile1, 0, 0) passed
+chown02.c:58: ␛[1;31mTFAIL: ␛[0mtestfile1: wrong mode permissions 0101666, expected 0100770
+chown02.c:46: ␛[1;32mTPASS: ␛[0mchown(testfile2, 0, 0) passed
+chown02.c:58: ␛[1;31mTFAIL: ␛[0mtestfile2: wrong mode permissions 0101666, expected 0102700
+
+Summary:
+passed   2
+failed   2
+broken   0
+skipped  0
+warnings 0
+FAIL LTP CASE chown02 : 1
+RUN LTP CASE abs01
+abs01       1  ␛[1;32mTPASS␛[0m  :  Test passed
+abs01       2  ␛[1;32mTPASS␛[0m  :  Test passed
+abs01       3  ␛[1;32mTPASS␛[0m  :  Test passed
+FAIL LTP CASE abs01 : 0
+RUN LTP CASE accept01
+tst_memutils.c:152: ␛[1;34mTINFO: ␛[0moom_score_adj does not exist, skipping the adjustment
+tst_test.c:1733: ␛[1;34mTINFO: ␛[0mLTP version: 20240524
+tst_test.c:1617: ␛[1;34mTINFO: ␛[0mTimeout per run is 0h 00m 30s
+tst_memutils.c:152: ␛[1;34mTINFO: ␛[0moom_score_adj does not exist, skipping the adjustment
+accept01.c:92: ␛[1;32mTPASS: ␛[0mbad file descriptor : EBADF (9)
+accept01.c:92: ␛[1;32mTPASS: ␛[0minvalid socket buffer : EINVAL (22)
+accept01.c:92: ␛[1;32mTPASS: ␛[0minvalid salen : EINVAL (22)
+accept01.c:92: ␛[1;32mTPASS: ␛[0mno queued connections : EINVAL (22)
+accept01.c:92: ␛[1;32mTPASS: ␛[0mUDP accept : EOPNOTSUPP (95)
+
+Summary:
+passed   5
+failed   0
+broken   0
+skipped  0
+warnings 0
+FAIL LTP CASE accept01 : 0
+#### OS COMP TEST GROUP END ltp-musl ####
+

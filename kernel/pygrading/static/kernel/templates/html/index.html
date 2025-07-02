@@ -1,0 +1,17 @@
+{% extends "base.jinja" %}
+
+{% block body %}
+<div class="card text-center shadow">
+    <div class="card-header">
+        PyGrading
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Well Done!</h5>
+        <p class="card-text">Hello, world! This is a new grading kernel with Bootstrap4.</p>
+        <a href="https://gitlab.educg.net/zhangmingyuan/PyGrading" class="btn btn-primary">Try Pygrading</a>
+    </div>
+    <div class="card-footer text-muted">
+        {{ author }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+
+<script>
+    function change(thead) {
+        let table = thead.parentNode
+        let tbody = table.children[1]
+        let span = thead.children[0].children[0].children[0]
+        let text = span.innerText
+        if (text === '▼') {
+            span.innerText = "▲"
+            tbody.style.display = 'block'
+        } else {
+            span.innerText = "▼"
+            tbody.style.display = 'none'
+        }
+    }
+</script>
+
+{% for name, content in logs.items() %}
+<table border="1">
+    <thead onclick="change(this)">
+    <tr><th>{{ name }}<span>▼</span></th></tr>
+    </thead>
+    <tbody style="display: none;">
+    <tr><td>{{ content | replace("\n", "<br/>") }} </td></tr>
+    </tbody>
+</table>
+{% endfor %}
