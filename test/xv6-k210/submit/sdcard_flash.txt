@@ -1,22 +1,0 @@
-[32m[1m[INFO][0m COM Port Selected Manually:  /dev/ttyUSB0 [0m
-[32m[1m[INFO][0m Default baudrate is 115200 , later it may be changed to the value you set. [0m
-[32m[1m[INFO][0m Trying to Enter K210 ROM ISP Mode... [0m
-.
-[32m[1m[INFO][0m ROM ISP detected, loading 2nd stage ISP [0m
-[32m[1m[INFO][0m [33mISP loaded in 0.919s [0m
-[32m[1m[INFO][0m Starting 2nd stage ISP at 0x805e0000 [0m
-[32m[1m[INFO][0m Wait For 0.1 second for ISP to Boot [0m
-[32m[1m[INFO][0m 2nd stage ISP ok [0m
-[32m[1m[INFO][0m Selected Baudrate: 3000000 [0m
-[32m[1m[INFO][0m Baudrate changed, greeting with ISP again ...  [0m
-[32m[1m[INFO][0m 2nd stage ISP ok [0m
-[32m[1m[INFO][0m [33mInitialize K210 SPI Flash [0m
-[32m[1m[INFO][0m Flash initialized successfully [0m
-[32m[1m[INFO][0m Flash ID: [33m0xC86018[0m, unique ID: [33m41383339350C0E2C[0m, size: [33m16[0m MB [0m
-[32m[1m[INFO][0m Extracting KFPKG ...  [0m
-[32m[1m[INFO][0m Writing sddd_rom.bin to Flash address 0x00000000 [0m
-[32m[1m[INFO][0m Flashing firmware block with SHA suffix [0m
-Programming BIN: |==-------------------------------------------| 5.3% Programming BIN: |====-----------------------------------------| 10.5% Programming BIN: |=======--------------------------------------| 15.8% Programming BIN: |=========------------------------------------| 21.1% Programming BIN: |===========----------------------------------| 26.3% Programming BIN: |==============-------------------------------| 31.6% Programming BIN: |================-----------------------------| 36.8% Programming BIN: |==================---------------------------| 42.1% Programming BIN: |=====================------------------------| 47.4% 35kiB/sProgramming BIN: |=======================----------------------| 52.6% 35kiB/sProgramming BIN: |==========================-------------------| 57.9% 35kiB/sProgramming BIN: |============================-----------------| 63.2% 35kiB/sProgramming BIN: |==============================---------------| 68.4% 35kiB/sProgramming BIN: |=================================------------| 73.7% 35kiB/sProgramming BIN: |===================================----------| 78.9% 35kiB/sProgramming BIN: |=====================================--------| 84.2% 35kiB/sProgramming BIN: |========================================-----| 89.5% 35kiB/sProgramming BIN: |==========================================---| 94.7% 35kiB/sProgramming BIN: |=============================================| 100.0% 35kiB/s
-[32m[1m[INFO][0m Flashed 77541 B [19 chunks of 4096B] (00000000~00012FFF) in 2.144s [0m
-[32m[1m[INFO][0m Writing riscv64.img to Flash address 0x00100000 [0m
-[32m[1m[INFO][0m Swapping endianess [0m
