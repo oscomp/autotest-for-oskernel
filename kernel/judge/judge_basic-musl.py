@@ -128,7 +128,7 @@ class test_close(TestBase):
 
 
 
-class dup2_test(TestBase):
+class test_dup2(TestBase):
     def __init__(self):
         super().__init__("dup2", 2)
 
@@ -558,9 +558,8 @@ if __name__ == '__main__':
     data = []
     pat = re.compile(r"========== START (.+) ==========")
     for line in serial_out:
-        line = line.strip()
-        if line in ('', '\n'):
-            continue
+        line = line.rstrip()
+        # 删去空行会导致pipe测试程序打印的空行被忽略，故不删去空行
         if state == 0:
             # 寻找测试样例开头
             if pat.findall(line):
