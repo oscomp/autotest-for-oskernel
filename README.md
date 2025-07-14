@@ -5,7 +5,7 @@ This document is to guide you to run your oscomp work locally
 git clone https://github.com/oscomp/autotest-for-oskernel.git
 
 ## 2 pull the docker image
-sudo docker pull docker.educg.net/cg/os-contest:20250627
+sudo docker pull docker.educg.net/cg/os-contest:20250714
 
 This docker image provides enviroment for OS build tool chain and qemu-systems
 
@@ -49,7 +49,7 @@ cd ~/Program/HIT (can be any directory)
 git clone https://gitlab.eduxiji.net/T202510213995926/oskernel2025-rocketos.git
 
 ## 6 Run the evaluation process
-sudo docker run --rm -v ~/Program/EDUCG/HIT/oskernel2025-rocketos/:/coursegrader/submit  -v ~/Program/testdata:/coursegrader/testdata -v ~/autotest-for-oskernel:/cg -v ~/Program/testdata:/mnt/cghook/ docker.educg.net/cg/os-contest:20250627 python3 /cg/kernel.zip
+sudo docker run --rm -v ~/Program/EDUCG/HIT/oskernel2025-rocketos/:/coursegrader/submit  -v ~/Program/testdata:/coursegrader/testdata -v ~/autotest-for-oskernel:/cg -v ~/Program/testdata:/mnt/cghook/ docker.educg.net/cg/os-contest:20250714 python3 /cg/kernel.zip
 
 after building your OS, and the evluate your OS output, above command will output the result on the console.
 
