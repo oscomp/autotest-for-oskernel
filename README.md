@@ -1,58 +1,70 @@
-# How to run oscomp locally
-This document is to guide you to run your oscomp work locally
+# Running oscomp test cases locally
 
-## 1 clone the autotest repository
+This document helps you run your `oscomp` work locally. Please execute the following commands.
+
+## 1. Clone the autotest repository
+
+```bash
 git clone https://github.com/oscomp/autotest-for-oskernel.git
+```
 
-## 2 pull the docker image
+## 2. Pull the docker image
+
+```bash
 sudo docker pull docker.educg.net/cg/os-contest:20250714
+```
 
-This docker image provides enviroment for OS build tool chain and qemu-systems
+This docker image provides environment for OS build toolchain and qemu-systems.
 
+## 3. Prepare auxiliary test data
 
-## 3 prepare the supporting testdata
-The supporting testdata is used for make judge on your work
+The auxiliary test data is used for judging your work. You can choose any directory you like, which we call `$data` in the following script.
 
-### create the directory
-mkdir ~/Program/testdata (This can be arbitray diretory)
+```bash
+# Create the directory.
+mkdir $data
 
-### cp the judge scripts to testdata
+# Copy the judge scripts there.
 cd autotest-for-oskernel
+cp -rf kernel/judge/* $data
 
-cp -fr kernel/judge/* ~/Program/testdata
+# Download the SD card images.
+cd $data
+wget https://github.com/oscomp/testsuits-for-oskernel/releases/download/pre-20250615/sdcard-la.img.xz
+wget https://github.com/oscomp/testsuits-for-oskernel/releases/download/pre-20250615/sdcard-rv.img.xz
 
-### download the sd-card images
-
-cd ~/Program/testdata
-
-Download  https://github.com/oscomp/testsuits-for-oskernel/releases/download/pre-20250615/sdcard-la.img.xz
-
-Download  https://github.com/oscomp/testsuits-for-oskernel/releases/download/pre-20250615/sdcard-rv.img.xz
-
+# It is possible to omit the `gzip` in order to save time,
+# provided you modify the testing scripts locally.
 unxz sdcard-la.img.xz
-
 gzip sdcard-la.img
-
 unxz sdcard-rv.img.xz
-
 gzip sdcard-rv.img
+```
 
-## 4 preparing supporting python kernel for judge
-cd autotest-for-oskernel
+## 4. Prepare auxiliary python kernel for judge
 
-cd kernel
+Note this "kernel" is not the operating system kernel.
 
+```bash
+cd autotest-for-oskernel/kernel
 zip ../kernel.zip -r *
+```
 
-## 5 clone your work
-cd ~/Program/HIT (can be any directory)
-git clone https://gitlab.eduxiji.net/T202510213995926/oskernel2025-rocketos.git
+## 5. Evaluate your work
 
-## 6 Run the evaluation process
-sudo docker run --rm -v ~/Program/EDUCG/HIT/oskernel2025-rocketos/:/coursegrader/submit  -v ~/Program/testdata:/coursegrader/testdata -v ~/autotest-for-oskernel:/cg -v ~/Program/testdata:/mnt/cghook/ docker.educg.net/cg/os-contest:20250714 python3 /cg/kernel.zip
+We assume you already have your work locally. We refer to its folder as `$os` in the following script.
 
-after building your OS, and the evluate your OS output, above command will output the result on the console.
+Navigate to the parent folder of this repository, and run:
 
+```bash
+sudo docker run --rm \
+-v $os:/coursegrader/submit \
+-v $data:/coursegrader/testdata \
+-v autotest-for-oskernel:/cg \
+-v $data:/mnt/cghook/ \
+docker.educg.net/cg/os-contest:20250714 python3 /cg/kernel.zip
+```
 
+The docker will build your OS, evaluate it, and output the result on the console.
 
-
+To stop it, use `docker stop`, rather than force-exiting the python script. The latter method will leave the files in a locked state, and unlocking might require a reboot.
