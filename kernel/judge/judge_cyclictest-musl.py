@@ -78,7 +78,7 @@ def parse_cyclictest(output):
 serial_out = sys.stdin.read()
 cyclictest_results = parse_cyclictest(serial_out)
 cyclictest_baseline = parse_cyclictest(cyclictest_baseline)
-def generage_score(results, baseline):
+def generate_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -102,4 +102,4 @@ def generage_score(results, baseline):
             else:
                 item['score'] = 1.0
     return lmbench
-print(json.dumps(generage_score(cyclictest_results, cyclictest_baseline)))
+print(json.dumps(generate_score(cyclictest_results, cyclictest_baseline)))

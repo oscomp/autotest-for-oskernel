@@ -86,7 +86,7 @@ b_regex_search ("a{25}b")
 
 """
 
-def generage_score(results, baseline):
+def generate_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -128,5 +128,5 @@ serial_out = sys.stdin.read()
 summary = {}
 summary['libcbench_results'] = parse_libcbench(serial_out)
 summary['libcbench_baseline'] = (parse_libcbench(libcbench_baseline))
-libcbench = generage_score(summary['libcbench_results'], summary['libcbench_baseline'])
+libcbench = generate_score(summary['libcbench_results'], summary['libcbench_baseline'])
 print(json.dumps(libcbench))
