@@ -1,6 +1,8 @@
 import sys
 import json
 
+# This is for reference only and is unused below.
+# Note terminal control sequences (\x1b[...m) should be present in real output, which isn't shown here.
 template = '''
 RUN LTP CASE writev01
 tst_tmpdir.c:316: TINFO: Using /tmp/LTP_wriRnYU84 as tmpdir (ext2/ext3/ext4 filesystem)
@@ -36,63 +38,61 @@ warnings 0
 END LTP CASE setegid02: 0
 '''
 
-def parse_ltp_log(content):
+def parse_ltp_log(content: str):
     lines = content.split('\n')
     result = {}
-    current_case = None
-    return_code = None
-    in_summary = False
-
+    testcase = None
+    passed, failed, broken, skipped, warnings = 0, 0, 0, 0, 0
     for line in lines:
-        stripped_line = line.strip()
+        line = line.strip()
 
-        if stripped_line.startswith('RUN LTP CASE'):
-            current_case = stripped_line.split()[-1]
-            summary_data = {'passed': 0, 'failed': 0, 'broken': 0, 'skipped': 0, 'warnings': 0, 'all': 0}
-            return_code = None
-            in_summary = False
-
-        elif current_case and stripped_line.startswith(f'FAIL LTP CASE {current_case}'):
-            parts = stripped_line.split()
-            return_code = int(parts[-1])
-            success = summary_data.get('passed', 0)
-
-            result[current_case] = {
-                'passed': summary_data['passed'],
-                'failed': summary_data['failed'],
-                'broken': summary_data['broken'],
-                'skipped': summary_data['skipped'],
-                'warnings': summary_data['warnings'],
-                'all': summary_data['all'],
-                'success': success
+        if line.startswith('RUN LTP CASE'):
+            testcase = line.split()[-1]
+            continue
+        
+        # Look at LTP logs (TPASS, TFAIL etc.) rather than summary.
+        # Some LTP binaries don't produce summaries when run directly.
+        if line.startswith("FAIL LTP CASE"):
+            result[testcase] = {
+                "success": passed,
+                "failed": failed,
+                "broken": broken,
+                "skipped": skipped,
+                "warnings": warnings,
+                "all": passed + failed + broken + skipped + warnings
             }
-            current_case = None
+            testcase = ""
+            passed, failed, broken, skipped, warnings = 0, 0, 0, 0, 0
+            continue
 
-        elif current_case:
-            if stripped_line == 'Summary:':
-                in_summary = True
-                continue
-
-            if in_summary:
-                if not stripped_line:
-                    in_summary = False
-                    continue
-
-                parts = stripped_line.split()
-                if len(parts) >= 2 and parts[0] in ['passed', 'failed', 'broken', 'skipped', 'warnings']:
-                    key = parts[0]
-                    value = int(parts[1])
-                    summary_data[key] += value
-                    summary_data['all'] += value
+        if "\x1b[1;32mTPASS: \x1b[0m" in line:
+            passed += 1
+            continue
+        if "\x1b[1;31mTFAIL: \x1b[0m" in line:
+            failed += 1
+            continue
+        if "\x1b[1;31mTBROK: \x1b[0m" in line:
+            broken += 1
+            continue
+        if "\x1b[1;33mTCONF: \x1b[0m" in line:
+            skipped += 1
+            continue
+        if "\x1b[1;35mTWARN: \x1b[0m" in line:
+            warnings += 1
+            continue
 
     return result
 
-result =  parse_ltp_log(sys.stdin.read())
+# `sys.stdin.read()` will by default decode in UTF-8.
+# However, it is possible that LTP produces some byte >= 0x80.
+# To preserve it as-is, we decode with latin-1 instead.
+read = sys.stdin.buffer.read().decode("latin-1")
+result = parse_ltp_log(read)
 result = [{
     "name": k,
     "pass": v["success"],
     "all": v["all"],
-    "score": v["success"]  # 暂时用 success 值做分数
+    "score": v["success"]
 } for k, v in result.items()]
 
 print(json.dumps(result))
