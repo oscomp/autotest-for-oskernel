@@ -89,7 +89,7 @@ def parse_netperf(output):
             key = ""
     return ans
 
-def generage_score(results, baseline):
+def generate_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -118,5 +118,5 @@ serial_out = sys.stdin.read()
 summary = {}
 summary['netperf_results'] = parse_netperf(serial_out)
 summary['netperf_baseline'] = (parse_netperf(netperf_baseline))
-netperf = generage_score(summary['netperf_results'], summary['netperf_baseline'])
+netperf = generate_score(summary['netperf_results'], summary['netperf_baseline'])
 print(json.dumps(netperf))

@@ -245,7 +245,7 @@ serial_out = sys.stdin.read()
 summary['lmbench_results'] = parse_lmbench(serial_out)
 summary['lmbench_baseline'] = parse_lmbench(lmbench_baseline)
 
-def generage_score(results, baseline):
+def generate_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -270,5 +270,5 @@ def generage_score(results, baseline):
                 item['score'] = 1.0
     return lmbench
 
-lmbench = generage_score(summary['lmbench_results'], summary['lmbench_baseline'])
+lmbench = generate_score(summary['lmbench_results'], summary['lmbench_baseline'])
 print(json.dumps(lmbench))

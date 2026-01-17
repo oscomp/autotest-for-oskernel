@@ -10,7 +10,7 @@ from datetime import datetime
 import pytz
 
 
-def generage_score(results, baseline):
+def generate_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -65,13 +65,13 @@ def postwork_old(job: Job):
             ranks = {}
             test_results = summary['lua_results']
             # lmbench_results = summary['scene_results']
-            lmbench = generage_score(summary['lmbench_results'], summary['lmbench_baseline'])
-            iozone = generage_score(summary['iozone_results'], summary['iozone_baseline'])
-            iperf = generage_score(summary['iperf_results'], summary['iperf_baseline'])
-            libcbench = generage_score(summary['libcbench_results'], summary['libcbench_baseline'])
-            netperf = generage_score(summary['netperf_results'], summary['netperf_baseline'])
-            unixbench = generage_score(summary['unixbench_results'], summary['unixbench_baseline'])
-            cyclic = generage_score(summary['cyclictest_results'], summary['cyclictest_baseline'])
+            lmbench = generate_score(summary['lmbench_results'], summary['lmbench_baseline'])
+            iozone = generate_score(summary['iozone_results'], summary['iozone_baseline'])
+            iperf = generate_score(summary['iperf_results'], summary['iperf_baseline'])
+            libcbench = generate_score(summary['libcbench_results'], summary['libcbench_baseline'])
+            netperf = generate_score(summary['netperf_results'], summary['netperf_baseline'])
+            unixbench = generate_score(summary['unixbench_results'], summary['unixbench_baseline'])
+            cyclic = generate_score(summary['cyclictest_results'], summary['cyclictest_baseline'])
             time_test = summary['time-test']
             ltp_score = summary['ltp_result']['score']
             ltp = {'name': 'LTP', 'res': ltp_score, 'baseline': '-', 'score': min(ltp_score, 1000) }

@@ -150,7 +150,7 @@ def parse_iperf(output):
                     break
     return ans
 
-def generage_score(results, baseline):
+def generate_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -179,6 +179,6 @@ result = {}
 serial_out = sys.stdin.read()
 result['iperf_results'] = parse_iperf(serial_out)
 result['iperf_baseline'] = (parse_iperf(iperf_baseline))
-iperf = generage_score(result['iperf_results'], result['iperf_baseline'])
+iperf = generate_score(result['iperf_results'], result['iperf_baseline'])
 
 print(json.dumps(iperf))
