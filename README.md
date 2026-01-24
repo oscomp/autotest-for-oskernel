@@ -11,7 +11,7 @@ git clone https://github.com/oscomp/autotest-for-oskernel.git
 ## 2. Pull the docker image
 
 ```bash
-sudo docker pull docker.educg.net/cg/os-contest:20250714
+sudo docker pull zhouzhouyi/os-contest:20260104
 ```
 
 This docker image provides environment for OS build toolchain and qemu-systems.
