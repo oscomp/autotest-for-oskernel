@@ -62,7 +62,7 @@ sudo docker run --rm \
 -v $data:/coursegrader/testdata \
 -v autotest-for-oskernel:/cg \
 -v $data:/mnt/cghook/ \
-docker.educg.net/cg/os-contest:20250714 python3 /cg/kernel.zip
+zhouzhouyi/os-contest:20260104 python3 /cg/kernel.zip
 ```
 
 The docker will build your OS, evaluate it, and output the result on the console.
