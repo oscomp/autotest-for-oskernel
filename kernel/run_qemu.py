@@ -71,19 +71,38 @@ def run_qemu(job, sbi, os_file, fs, out):
     job.add_log(cmd, "QEMU CMD")
     console_log("运行：" + cmd)
 
-    p = subprocess.Popen(cmd, stdout=open("/tmp/qemu-rv-out.txt", "w"), stderr=open("/tmp/qemu-rv-err.txt", 'w'), stdin=subprocess.PIPE, shell=True)
-    try:
-        p.communicate("\n".encode(), timeout=timeout)
-    except subprocess.TimeoutExpired:
-        p.kill()
-    # console_log("qemu-system-riscv 运行完成")
-    f = open(out, "w")
-    f.write(cmd)
-    f.write("\n")
-    f.write(open("/tmp/qemu-rv-out.txt", errors='ignore').read())
-    f.write("\n\n")
-    f.write(open("/tmp/qemu-rv-err.txt", errors='ignore').read())
-    f.close()
+    with open(out, "w", errors='ignore', buffering=1) as f, \
+         open("/mnt/cghook/console_log", "a", errors='ignore', buffering=1) as hook_f:
+        f.write(cmd)
+        f.write("\n")
+        f.flush()
+        p = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            stdin=subprocess.PIPE,
+            shell=True,
+            text=True,
+            bufsize=1,
+        )
+        try:
+            p.stdin.write("\n")
+            p.stdin.flush()
+            p.stdin.close()
+            for line in p.stdout:
+                f.write(line)
+                f.flush()
+                hook_f.write("qemu-system-riscv:" + line)
+                hook_f.flush()
+            p.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            p.kill()
+            for line in p.stdout:
+                f.write(line)
+                f.flush()
+                hook_f.write("qemu-system-riscv:" + line)
+                hook_f.flush()
+            p.wait()
     return error, process
 
 
@@ -100,19 +119,38 @@ def run_qemu_loong(job, sbi, os_file, fs, out):
         cmd += " -drive file=disk-la.img,if=none,format=raw,id=x1 -device virtio-blk-pci,drive=x1"
     job.add_log(cmd, "QEMU CMD")
     console_log("运行：" + cmd)
-    p = subprocess.Popen(cmd, stdout=open("/tmp/qemu-la-out.txt", "w"), stderr=open("/tmp/qemu-la-err.txt", 'w'), stdin=subprocess.PIPE, shell=True)
-    try:
-        p.communicate("\n".encode(), timeout=timeout)
-    except subprocess.TimeoutExpired:
-        p.kill()
-    # console_log("qemu-system-loongarch64 运行完成")
-    f = open(out, "w")
-    f.write(cmd)
-    f.write("\n")
-    f.write(open("/tmp/qemu-la-out.txt", errors='ignore').read())
-    f.write("\n\n")
-    f.write(open("/tmp/qemu-la-err.txt", errors='ignore').read())
-    f.close()
+    with open(out, "w", errors='ignore', buffering=1) as f, \
+         open("/mnt/cghook/console_log", "a", errors='ignore', buffering=1) as hook_f:
+        f.write(cmd)
+        f.write("\n")
+        f.flush()
+        p = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            stdin=subprocess.PIPE,
+            shell=True,
+            text=True,
+            bufsize=1,
+        )
+        try:
+            p.stdin.write("\n")
+            p.stdin.flush()
+            p.stdin.close()
+            for line in p.stdout:
+                f.write(line)
+                f.flush()
+                hook_f.write("qemu-system-loong:" + line)
+                hook_f.flush()
+            p.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            p.kill()
+            for line in p.stdout:
+                f.write(line)
+                f.flush()
+                hook_f.write("qemu-system-loong:" + line)
+                hook_f.flush()
+            p.wait()
     return error, process
 
 """
