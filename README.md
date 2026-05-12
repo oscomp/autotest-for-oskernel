@@ -11,7 +11,7 @@ git clone https://github.com/oscomp/autotest-for-oskernel.git
 ## 2. Pull the docker image
 
 ```bash
-sudo docker pull zhouzhouyi/os-contest:20260104
+sudo docker pull zhouzhouyi/os-contest:20260510
 ```
 
 This docker image provides environment for OS build toolchain and qemu-systems.
@@ -62,7 +62,7 @@ sudo docker run --rm \
 -v $data:/coursegrader/testdata \
 -v autotest-for-oskernel:/cg \
 -v $data:/mnt/cghook/ \
-zhouzhouyi/os-contest:20260104 python3 /cg/kernel.zip
+zhouzhouyi/os-contest:20260510 python3 /cg/kernel.zip
 ```
 
 The docker will build your OS, evaluate it, and output the result on the console.
