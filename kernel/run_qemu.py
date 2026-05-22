@@ -85,24 +85,39 @@ def run_qemu(job, sbi, os_file, fs, out):
             text=True,
             bufsize=1,
         )
+
+        # Thread to read stdout in real-time
+        timeout_occurred = threading.Event()
+
+        def read_output():
+            try:
+                for line in p.stdout:
+                    if timeout_occurred.is_set():
+                        break
+                    f.write(line)
+                    f.flush()
+                    hook_f.write("qemu-system-riscv:" + line)
+                    hook_f.flush()
+            except:
+                pass
+
+        reader_thread = threading.Thread(target=read_output)
+        reader_thread.daemon = True
+        reader_thread.start()
+
         try:
             p.stdin.write("\n")
             p.stdin.flush()
             p.stdin.close()
-            for line in p.stdout:
-                f.write(line)
-                f.flush()
-                hook_f.write("qemu-system-riscv:" + line)
-                hook_f.flush()
             p.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
+            timeout_occurred.set()
             p.kill()
-            for line in p.stdout:
-                f.write(line)
-                f.flush()
-                hook_f.write("qemu-system-riscv:" + line)
-                hook_f.flush()
             p.wait()
+
+        # Wait for reader thread to finish (with a short timeout)
+        reader_thread.join(timeout=1)
+
     return error, process
 
 
@@ -133,24 +148,39 @@ def run_qemu_loong(job, sbi, os_file, fs, out):
             text=True,
             bufsize=1,
         )
+
+        # Thread to read stdout in real-time
+        timeout_occurred = threading.Event()
+
+        def read_output():
+            try:
+                for line in p.stdout:
+                    if timeout_occurred.is_set():
+                        break
+                    f.write(line)
+                    f.flush()
+                    hook_f.write("qemu-system-loong:" + line)
+                    hook_f.flush()
+            except:
+                pass
+
+        reader_thread = threading.Thread(target=read_output)
+        reader_thread.daemon = True
+        reader_thread.start()
+
         try:
             p.stdin.write("\n")
             p.stdin.flush()
             p.stdin.close()
-            for line in p.stdout:
-                f.write(line)
-                f.flush()
-                hook_f.write("qemu-system-loong:" + line)
-                hook_f.flush()
             p.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
+            timeout_occurred.set()
             p.kill()
-            for line in p.stdout:
-                f.write(line)
-                f.flush()
-                hook_f.write("qemu-system-loong:" + line)
-                hook_f.flush()
             p.wait()
+
+        # Wait for reader thread to finish (with a short timeout)
+        reader_thread.join(timeout=1)
+
     return error, process
 
 """
