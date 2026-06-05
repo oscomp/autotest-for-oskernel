@@ -1,5 +1,6 @@
 import random
 import time
+import math
 from os.path import abspath
 
 import os
@@ -234,7 +235,11 @@ def postwork(job):
     for group in test_groups:
         s, c = build_table(group, test_arch, summary)
         comment += c + "<br/>"
-        score += s['#TOTAL']
+        if "ltp" in group.lower():
+            raw = max(0.0, min(s['#TOTAL'], 10000.0))
+            score += 500.0 * math.log10(1 + 9 * raw / 10000.0)
+        else:
+            score += s['#TOTAL']
         del s['#TOTAL']
         if len(s) == 0:
             s = {k: 0 for k in test_arch}
@@ -298,4 +303,3 @@ if __name__ == "__main__":
     print(job._JobBase__score)
     with open("comment.html", "w", encoding="utf-8") as f:
         f.write(job._JobBase__comment)
-
