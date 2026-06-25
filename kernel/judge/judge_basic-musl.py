@@ -559,7 +559,8 @@ if __name__ == '__main__':
     pat = re.compile(r"========== START (.+) ==========")
     for line in serial_out:
         line = line.rstrip()
-        # 删去空行会导致pipe测试程序打印的空行被忽略，故不删去空行
+        if line in ('', '\n'):
+            continue
         if state == 0:
             # 寻找测试样例开头
             if pat.findall(line):

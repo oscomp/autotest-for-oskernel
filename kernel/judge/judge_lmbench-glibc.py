@@ -1,3 +1,4 @@
+
 lmbench_baseline = r"""
 "test_lua.sh" 9L, 190B written
 root@debian:~/testsuits-for-oskernel/scripts/lua# chmod +x test_lua.sh 
@@ -204,6 +205,7 @@ def to_int(x):
         return int(x)
     except ValueError:
         return -1
+
 def parse_lmbench(output):
     result = {}
     units = ("microseconds", "KB/sec", "MB/sec")
@@ -245,7 +247,7 @@ serial_out = sys.stdin.read()
 summary['lmbench_results'] = parse_lmbench(serial_out)
 summary['lmbench_baseline'] = parse_lmbench(lmbench_baseline)
 
-def generate_score(results, baseline):
+def generage_score(results, baseline):
     lmbench_results = results
     lmbench_baseline = baseline
     lmbench = [
@@ -270,5 +272,5 @@ def generate_score(results, baseline):
                 item['score'] = 1.0
     return lmbench
 
-lmbench = generate_score(summary['lmbench_results'], summary['lmbench_baseline'])
+lmbench = generage_score(summary['lmbench_results'], summary['lmbench_baseline'])
 print(json.dumps(lmbench))
