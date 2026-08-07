@@ -1,3 +1,4 @@
+import re
 import sys
 import json
 
@@ -42,13 +43,16 @@ def parse_ltp_log(content):
     current_case = None
     return_code = None
     in_summary = False
+    skip_summary = False
 
     for line in lines:
+        line = re.sub(r'\x1b\[[0-9;]*m', '', line)  # strip ANSI color codes so kernel log pollution doesn't crash the judge
         stripped_line = line.strip()
 
         if stripped_line.startswith('RUN LTP CASE'):
             current_case = stripped_line.split()[-1]
             summary_data = {'passed': 0, 'failed': 0, 'broken': 0, 'skipped': 0, 'warnings': 0, 'all': 0}
+            summary_seen = False
             return_code = None
             in_summary = False
 
@@ -71,17 +75,27 @@ def parse_ltp_log(content):
         elif current_case:
             if stripped_line == 'Summary:':
                 in_summary = True
+                if summary_seen:
+                    skip_summary = True
+                    continue
+                summary_seen = True
+                skip_summary = False
                 continue
 
             if in_summary:
                 if not stripped_line:
                     in_summary = False
                     continue
+                if skip_summary:
+                    continue
 
                 parts = stripped_line.split()
                 if len(parts) >= 2 and parts[0] in ['passed', 'failed', 'broken', 'skipped', 'warnings']:
                     key = parts[0]
-                    value = int(parts[1])
+                    m = re.match(r'\d+', parts[1])
+                    if m is None:
+                        continue  # line polluted by interleaved kernel log, skip instead of crash
+                    value = int(m.group())
                     summary_data[key] += value
                     summary_data['all'] += value
 
